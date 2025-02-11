@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom'
 // import { getDb } from '../../../backend/connect';
 import { getPost } from '../api';
 import { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const ReadBlog = () => {
   const [post,setPost]=useState([])
   let params=useParams();
   let id=params.id
+  const navigate=useNavigate()
   useEffect(()=>{
     async function getBlog(){
       let data=await getPost(id)
@@ -22,11 +24,12 @@ const ReadBlog = () => {
     console.log(post)
 
   return (
-    <div className='flex flex-col justify-center items-center py-100'>
+    <div className='flex flex-col justify-center items-center py-100 '>
+      <button className='my-4 bg-red-300 rounded-md px-4' onClick={()=>navigate(-1)}>Back</button>
      <h1>{post.author}</h1>
      <h1>{post.content}</h1>
-     <h1>{post.dateCreated}</h1>
-     <h1>{post.description}</h1>
+     {/* <h1>{post.dateCreated}</h1> */}
+     <h1>{post.dateCreated?.slice(4,15)}</h1>
     </div>
   )
 }
