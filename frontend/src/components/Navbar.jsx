@@ -10,7 +10,7 @@ const Navbar = () => {
           <Link
             to={page.path}
             key={page.path} // Adding a key for React list rendering
-            className='p-4 m-4 text-black border-solid border-2 rounded-md'
+            className='p-4 m-4  border-solid border-2 rounded-md'
           >
             <button>
               {page.name}
