@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import { login } from "../api";
 import {useNavigate} from 'react-router-dom'
 import axios from "axios";
+
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -12,13 +13,13 @@ const Login = () => {
     e.preventDefault();
      let response=await login(user);
     if(response){
-        navigate('/Home')
         sessionStorage.setItem('user',response)
-        axios.defaults.headers.common['Authorization']=`Bearer ${token}`
+        axios.defaults.headers.common['authorization']=`Bearer ${response}`
+        navigate('/Home')
+        console.log(response)
     }else{
         alert('login failed')
-    }
-      
+    } 
   }
   return (
     <div>

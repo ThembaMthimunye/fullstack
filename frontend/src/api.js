@@ -45,6 +45,7 @@ export async function updateuser(id, user) {
 
 export async function getPosts() {
   const response =await axios.get(`${URL}/post`);
+  
   if (response.status === 200) {
     return response.data;
   } else {

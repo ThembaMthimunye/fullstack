@@ -18,6 +18,12 @@ import ReadBlog from "./Pages/ReadBlog.jsx";
 import Layout from "./components/Layout.jsx";
 
 function App() {
+  // useEffect(()=>{
+  //   let token=sessionStorage.getItem('user')
+  //   if(token){
+  //     axios.defaults.headers.common['authorization']=`Bearer ${token}`
+  //   }
+  // },[])
   return (
     <Router>
       <Routes>
