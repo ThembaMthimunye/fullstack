@@ -14,7 +14,7 @@ const Login = () => {
      let response=await login(user);
     if(response){
         sessionStorage.setItem('user',response)
-        axios.defaults.headers.common['authorization']=`Bearer ${response}`
+         axios.defaults.headers.common['authorization']=`Bearer ${response}`
         navigate('/Home')
         console.log(response)
     }else{

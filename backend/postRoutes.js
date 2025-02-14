@@ -9,7 +9,7 @@ let postRoutes = express.Router();
 
 ///Retrive all posts
 
-postRoutes.route("/post").get(  async (req, res) => {
+postRoutes.route("/post").get(verifyToken,  async (req, res) => {
   let db = database.getDb();
   let data = await db.collection("posts").find({}).toArray();
   if (data.length > 0) {
@@ -58,7 +58,7 @@ postRoutes.route('/post/:id').put(verifyToken, async(req,res)=>{
             title:req.body.title,
         description:req.body.description,
         content:req.body.content,
-        author:req.body.author,
+        author:req.body.user._id,
         dateCreated:req.body.dateCreated
         }
     }
@@ -73,19 +73,24 @@ postRoutes.route('/post/:id').delete(verifyToken, async(req,res)=>{
     let data=await db.collection('posts').deleteOne({_id:new ObjectId(req.params.id)})
     res.json(data)
 })
-function verifyToken(req,res,next){
-    // const authHeaders=req.headers['authorization']
-    // const token=authHeaders&&authHeaders.split(' ')[1]
-    // if(!token){
-    //     return res.status(401).json({message:"Authentication  token missing "})
-    // }
-    // jwt.verify(token,process.env.SECRETKEY,(error,user)=>{
-    //     if(error){
-    //         return res.status(403).json({message:"invalid token "})
-    //     }
 
-    //     req.body.user=user
-    //     next()
-    // })
+
+//     //    //   //      //
+///// //    //   //      // 
+//   //   //    //   //      // 
+function verifyToken(req,res,next){
+    const authHeaders=req.headers['authorization']
+    const token=authHeaders&&authHeaders.split(' ')[1]
+    if(!token){
+         return res.status(401).json({message:"Authentication  token missing "})
+     }
+       jwt.verify(token,process.env.SECRETKEY,(error,user)=>{
+         if(error){
+             return res.status(403).json({message:"invalid token "})
+         }
+
+        req.body.user=user
+         next()
+     })
 }
 module.exports=postRoutes
