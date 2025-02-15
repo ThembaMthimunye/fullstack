@@ -4,7 +4,7 @@ import { getPosts } from "../api";
 import { jwtDecode } from "jwt-decode"; // ✅ Correct Import
 
 const Profile = () => {
-  const [posts, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -14,13 +14,16 @@ const Profile = () => {
 
       try {
         const decodedUser = jwtDecode(token);
+        // const allPosts = await getPosts();
         const allPosts = await getPosts();
+        console.log("All Posts:", allPosts);
         const filteredPost = allPosts.filter(
-          (post) => post.author === decodedUser._id
+          (post) => post.author == decodedUser._id
         );
 
-        setPost(filteredPost);
+        setPosts(filteredPost);
         setUser(decodedUser);
+        console.log(posts);
       } catch (error) {
         console.error("Error decoding token:", error);
       }
@@ -28,21 +31,28 @@ const Profile = () => {
     loadData();
   }, []);
 
-  console.log("Updated user:", user);
-  console.log(allPosts)
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
 
   return (
-    <div className="text-white">
+    <div className="text-white flex  items-center pt-50 flex-col">
       <h2>{user?.user?.name || "N/A"}</h2>
       <h2>{user?.user?.email || "N/A"}</h2>
-      <h2>{user?.user?.joinDate || "N/A"}</h2>
+      <h2>{(user?.user?.joinDate).slice(0,10) || "N/A"}</h2>
 
-      {
-        posts.map((post)=>{
-          return <BlogCard post={post} />
-          
-        })
-      }
+      <div>
+      
+          {
+             posts.map((post) => (
+              <div key={post._id}>
+                <h1>{post.title}</h1>
+                <h2>{post.Description}</h2>
+              </div>
+            ))
+          }
+        
+      </div>
     </div>
   );
 };
