@@ -40,44 +40,12 @@ awsRoutes.route('/images').post(verifyToken, async(req,res)=>{
     const file=req.files[0]
     const bucketParams={
         Bucket:S3bucket,
-        key:file.originalname,
+        Key:file.originalname,
         Body:file.buffer
     }
         const data=await s3Client.send(new PutObjectCommand(bucketParams))
     res.json(data)
 })
-
-const multer = require('multer');
-// const { PutObjectCommand } = require('@aws-sdk/client-s3');
-
-// Configure multer to store the file in memory as a buffer
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage }).array('image', 1);  // Expecting 'image' field with 1 file
-
-awsRoutes.route('/images').post(verifyToken, upload, async (req, res) => {
-    // Ensure files are present in the request
-    const file = req.files && req.files[0];
-    console.log(file);
-    
-    if (!file) {
-        return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    const bucketParams = {
-        Bucket: S3bucket,
-        Key: file.originalname,  // Corrected 'Key' capitalization
-        Body: file.buffer
-    };
-
-    try {
-        // const data=await s3Client.send(new PutObjectCommand(bucketParams))
-        const data = await s3Client.send(new PutObjectCommand(bucketParams));
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ message: 'Error uploading file to S3', error: error.message });
-    }
-});
-
 
 
 
