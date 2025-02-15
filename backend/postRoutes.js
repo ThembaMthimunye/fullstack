@@ -41,7 +41,8 @@ postRoutes.route('/posts').post(verifyToken, async(req,res)=>{
         description:req.body.description,
         content:req.body.content,
         author:req.body.author,
-        dateCreated:req.body.dateCreated
+        dateCreated:req.body.dateCreated,
+        imageId:request.body.imageId
     }
 
     let data =await db.collection("posts").insertOne(mongoObject)
@@ -59,7 +60,8 @@ postRoutes.route('/post/:id').put(verifyToken, async(req,res)=>{
         description:req.body.description,
         content:req.body.content,
         author:req.body.user._id,
-        dateCreated:req.body.dateCreated
+        dateCreated:req.body.dateCreated,
+        imageId:request.body.imageId
         }
     }
     let data=await db.collection('posts').updateOne({_id:new ObjectId(req.params.id)},mongoObject)

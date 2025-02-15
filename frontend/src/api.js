@@ -2,11 +2,10 @@ import axios from "axios";
 
 const URL = "http://localhost:8000";
 
-
 /////////////////////////////////////////////////////////////////// Users Routes///////////////////////////////////////////////////////////////
 
 export async function getusers() {
-  const response =await axios.get(`${URL}/user`);
+  const response = await axios.get(`${URL}/user`);
   if (response.status === 200) {
     return response.data;
   } else {
@@ -15,7 +14,7 @@ export async function getusers() {
 }
 
 export async function getuser(id) {
-  const response =await axios.get(`${URL}/user/${id}`);
+  const response = await axios.get(`${URL}/user/${id}`);
   if (response.status === 200) {
     return response.data;
   } else {
@@ -24,28 +23,27 @@ export async function getuser(id) {
 }
 
 export async function deleteuser(id) {
-  const response =await axios.delete(`${URL}/user/${id}`);
+  const response = await axios.delete(`${URL}/user/${id}`);
   {
     return response;
   }
 }
 
-export async function  createuser(user) {
-    const response =await axios.post(`${URL}/user`,user);
-    return response
+export async function createuser(user) {
+  const response = await axios.post(`${URL}/user`, user);
+  return response;
 }
 
 export async function updateuser(id, user) {
-    const response =await axios.put(`${URL}/user/${id}`,user);
-    return response
+  const response = await axios.put(`${URL}/user/${id}`, user);
+  return response;
 }
-
 
 /////////////////////////////////////////////////////////////////// Post Routes///////////////////////////////////////////////////////////////
 
 export async function getPosts() {
-  const response =await axios.get(`${URL}/post`);
-  
+  const response = await axios.get(`${URL}/post`);
+
   if (response.status === 200) {
     return response.data;
   } else {
@@ -54,39 +52,57 @@ export async function getPosts() {
 }
 
 export async function getPost(id) {
-  const response =await axios.get(`${URL}/post/${id}`);
-  if (response.status === 200) {
-    return response.data;
-  } else {
-    return;
-  }
+  const response = await axios.get(`${URL}/post/${id}`);
+  const post =response.data
+  const  data= await getImage(post.imageId)
+  post.image=data
+ 
+  return post
 }
 
 export async function deletePost(id) {
-  const response =await axios.delete(`${URL}/post/${id}`);
+  const response = await axios.delete(`${URL}/post/${id}`);
   {
     return response;
   }
 }
 
-export async function  createPost(post) {
-    const response =await axios.post(`${URL}/posts`,post);
-    return response
+export async function createPost(post) {
+
+  const data=await createImage(post.file)
+  const imageId=data.data.VersionId
+  post.imageId=imageId
+  const response = await axios.post(`${URL}/posts`, post);
+  return response;
 }
 
 export async function updatePost(id, post) {
-    const response =await axios.put(`${URL}/post/${id}`,post);
-    return response
+  const response = await axios.put(`${URL}/post/${id}`, post);
+  return response;
 }
 
-
 export async function login(user) {
-  const response=await axios.post(`${URL}/user/login`,user)
-  if(response.data.success){
-    console.log(response.data)
-    return response.data.token
+  const response = await axios.post(`${URL}/user/login`, user);
+  if (response.data.success) {
+    console.log(response.data);
+    return response.data.token;
+  } else {
+    alert("login failed");
   }
-  else{
-    alert('login failed')
-  }
+}
+
+export async function createImage(file) {
+  const formData = new FormData();
+  formData.append("image", file);
+  const response = await axios.post(`${URL}/images`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+}
+
+export async function getImage(id) {
+  const response = await axios.get(`${URL}/images${id}`);
+  return response;
 }
