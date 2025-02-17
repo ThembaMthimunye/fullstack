@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { createPost } from "../api";
+import { createImage } from "../api";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -10,18 +11,36 @@ const CreateBlog = () => {
   
   const inputFile = useRef(null);
   const MAX_FILE_SIZE=15000000
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   let data = {
+  //     title: title,
+  //     description: description,
+  //     content: content,
+  //     author: null,
+  //     dateCreated: new Date(),
+  //     file: file
+  //   };
+  //   await createPost(data);
+  // }
   async function handleSubmit(e) {
     e.preventDefault();
+    
+    let imageResponse = await createImage(file); // Upload image first
+    let imageUrl = imageResponse.data.url; // Assume response contains the image URL
+  
     let data = {
-      title: title,
-      description: description,
-      content: content,
+      title,
+      description,
+      content,
+      imageUrl,  // ✅ Attach image URL here
       author: null,
       dateCreated: new Date(),
-      file: file
     };
+  
     await createPost(data);
   }
+  
 
   async function handleFileUpload(e) {
     const file = e.target.files[0];
@@ -34,7 +53,7 @@ const CreateBlog = () => {
       inputFile.current.type = 'file'; 
       return
     }
-    if (file>MAX_FILE_SIZE) {
+    if (file.size>MAX_FILE_SIZE) {
       alert("file too big.");
       inputFile.current.value = ''; 
       inputFile.current.type = 'file'; 
@@ -80,7 +99,7 @@ const CreateBlog = () => {
         ref={inputFile}
         onChange={handleFileUpload}
         required
-        // name="images"
+        name="image"
       />
 
       <button type="submit">Submit</button>

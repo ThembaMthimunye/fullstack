@@ -53,10 +53,10 @@ export async function getPosts() {
 
 export async function getPost(id) {
   const response = await axios.get(`${URL}/post/${id}`);
-  const post =response.data
   const  data= await getImage(post.imageId)
+  const post =response.data
   post.image=data
- 
+
   return post
 }
 
@@ -93,7 +93,8 @@ export async function login(user) {
 
 export async function createImage(file) {
   const formData = new FormData();
-  formData.append("image", file);
+  // formData.append("image", file);
+  formData.append("image", file)
   const response = await axios.post(`${URL}/images`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

@@ -6,18 +6,21 @@ const users = require('./userRoutes.js');
 const awsRoutes = require('./awsRoutes');
 const multer = require('multer');
 
-const upload = multer({ dest: 'uploads/' });
+// const upload = multer();
+const upload = multer({ storage: multer.memoryStorage() }); 
+ // Ensure "image" matches the frontend file input name
+
 
 const app = express();
 const PORT = 8000;
-
+// app.use(upload.any());
+app.use(upload.single("image"));
 app.use(cors());
 app.use(express.json());
 app.use(posts);
 app.use(users);
 app.use(awsRoutes);
 
-app.use(upload.any());
 
 app.listen(PORT, () => {
     connect.connectToServer();
