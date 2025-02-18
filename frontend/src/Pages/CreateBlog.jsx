@@ -10,40 +10,42 @@ const CreateBlog = () => {
   
   
   const inputFile = useRef(null);
-  const MAX_FILE_SIZE=15000000
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   let data = {
-  //     title: title,
-  //     description: description,
-  //     content: content,
-  //     author: null,
-  //     dateCreated: new Date(),
-  //     file: file
-  //   };
-  //   await createPost(data);
-  // }
+  const MAX_FILE_SIZE=1500000000
   async function handleSubmit(e) {
     e.preventDefault();
-    
-    let imageResponse = await createImage(file); // Upload image first
-    let imageUrl = imageResponse.data.url; // Assume response contains the image URL
-  
     let data = {
-      title,
-      description,
-      content,
-      imageUrl,  // ✅ Attach image URL here
+      title: title,
+      description: description,
+      content: content,
       author: null,
       dateCreated: new Date(),
+      file: file
     };
-  
     await createPost(data);
+    console.log(data)
   }
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+    
+  //   let imageResponse = await createImage(file); // Upload image first
+  //   let imageUrl = imageResponse.data.url; // Assume response contains the image URL
+  
+  //   let data = {
+  //     title,
+  //     description,
+  //     content,
+  //     imageUrl,  // ✅ Attach image URL here
+  //     author: null,
+  //     dateCreated: new Date(),
+  //   };
+  
+  //   await createPost(data);
+  // }
   
 
   async function handleFileUpload(e) {
     const file = e.target.files[0];
+    console.log(file)
     const fileExtension = file.name.substring(file.name.lastIndexOf('.'));
     
     

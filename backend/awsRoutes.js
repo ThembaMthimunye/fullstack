@@ -21,33 +21,56 @@ const s3bucket = "thembastorage";
 const s3Client = new S3Client({
   region: "us-east-2",
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
+    accessKeyId: "AKIAQXPZDEZJ55US2QFV",
+    secretAccessKey: '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'
+    ,
   },
 });
 
 // ✅ Retrieve an image from S3
+// awsRoutes.route("/images/:id").get(verifyToken, async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const bucketParams = { Bucket: s3bucket, Key: id };
+
+//     const data = await s3Client.send(new GetObjectCommand(bucketParams));
+//     const contentType = data.ContentType;
+//     const srcString = await data.Body.transformToString("base64");
+//     const imageSource = `data:${contentType};base64,${srcString}`;
+
+//     res.json(imageSource);
+//   } catch (error) {
+//     console.error("Error fetching image:", error);
+//     res.status(500).json({ message: "Error fetching image", error });
+//   }
+// });
 awsRoutes.route("/images/:id").get(verifyToken, async (req, res) => {
   try {
     const id = req.params.id;
     const bucketParams = { Bucket: s3bucket, Key: id };
 
     const data = await s3Client.send(new GetObjectCommand(bucketParams));
+
+    if (!data.Body) {
+      return res.status(404).json({ message: "Image not found" });
+    }
+
     const contentType = data.ContentType;
     const srcString = await data.Body.transformToString("base64");
     const imageSource = `data:${contentType};base64,${srcString}`;
 
-    res.json(imageSource);
+    res.json( imageSource );
   } catch (error) {
     console.error("Error fetching image:", error);
-    res.status(500).json({ message: "Error fetching image", error });
+    res.status(500).json({ message: "Error fetching image", error: error.message });
   }
-});
+}); 
+
 
 // ✅ Upload an image to S3
 awsRoutes.route("/images").post(verifyToken, upload.single("image"), async (req, res) => {
   try {
-    console.log("Uploaded file:", req.file);
+    
 
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
@@ -63,13 +86,14 @@ awsRoutes.route("/images").post(verifyToken, upload.single("image"), async (req,
 
     await s3Client.send(new PutObjectCommand(bucketParams));
     res.json({ message: "Upload successful" });
+    console.log("Uploaded file:", req.file);
   } catch (error) {
     console.error("S3 Upload Error:", error);
     res.status(500).json({ message: "Upload failed", error });
   }
 });
 
-// ✅ Authentication Middleware
+
 function verifyToken(req, res, next) {
   const authHeaders = req.headers["authorization"];
   const token = authHeaders && authHeaders.split(" ")[1];

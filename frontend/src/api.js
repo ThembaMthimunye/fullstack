@@ -1,5 +1,5 @@
 import axios from "axios";
-
+// import getImage
 const URL = "http://localhost:8000";
 
 /////////////////////////////////////////////////////////////////// Users Routes///////////////////////////////////////////////////////////////
@@ -52,13 +52,22 @@ export async function getPosts() {
 }
 
 export async function getPost(id) {
-  const response = await axios.get(`${URL}/post/${id}`);
-  const  data= await getImage(post.imageId)
-  const post =response.data
-  post.image=data
+  try {
+    const response = await axios.get(`${URL}/post/${id}`);
+    const post = response.data;  // Directly get the post data
+    
+    if (post && post.imageId) {
+      const data = await getImage(post.imageId);  // Fetch the image
+      post.imageId = data;  // Attach the image to the post object
+    }
 
-  return post
+    return post;
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    throw error;  // You can throw an error or return a fallback value
+  }
 }
+
 
 export async function deletePost(id) {
   const response = await axios.delete(`${URL}/post/${id}`);
@@ -70,7 +79,7 @@ export async function deletePost(id) {
 export async function createPost(post) {
 
   const data=await createImage(post.file)
-  const imageId=data.data.VersionId
+  const imageId=post.file.name
   post.imageId=imageId
   const response = await axios.post(`${URL}/posts`, post);
   return response;
@@ -104,6 +113,6 @@ export async function createImage(file) {
 }
 
 export async function getImage(id) {
-  const response = await axios.get(`${URL}/images${id}`);
+  const response = await axios.get(`${URL}/images/${id}`);
   return response;
 }

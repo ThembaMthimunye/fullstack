@@ -22,10 +22,10 @@ const Login = () => {
     } 
   }
   return (
-    <div>
+    <div >
       <form action="" onSubmit={submitHandle}>
        
-
+        <div div className='flex flex-col'>
         <label htmlFor="">email</label>
         <input
           type="text"
@@ -46,6 +46,8 @@ const Login = () => {
         />
 
         <button onClick={navigate} type='submit'>Login</button>
+        </div>
+       
       </form>
     </div>
   );
