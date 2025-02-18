@@ -13,12 +13,11 @@ const Home = () => {
         if (Array.isArray(data)) {
           setPost(data);
         } else {
-          setPost([]); 
+          setPost([]);
         }
       } catch (error) {
-       
         console.error("Error fetching posts:", error);
-        setPost([]); 
+        setPost([]);
       }
     }
 
@@ -28,16 +27,18 @@ const Home = () => {
   console.log(post);
 
   return (
-    <div className="">
-      {post && post.length > 0 ? (
-        post.map((postItem) => (
-          <div className="hover:bg-red-500 pt-40 flex justify-center items-center" key={postItem._id}>
-            <BlogCard postItem={postItem} />
-          </div>
-        ))
-      ) : (
-        <p>No posts available</p> 
-      )}
+    <div className="flex flex-col items-center w-full">
+      <div className="w-1/3">
+        {post && post.length > 0 ? (
+          post.map((postItem) => (
+            <div key={postItem._id}>
+              <BlogCard postItem={postItem} />
+            </div>
+          ))
+        ) : (
+          <p>No posts available</p>
+        )}
+      </div>
     </div>
   );
 };
