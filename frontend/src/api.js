@@ -54,17 +54,17 @@ export async function getPosts() {
 export async function getPost(id) {
   try {
     const response = await axios.get(`${URL}/post/${id}`);
-    const post = response.data;  // Directly get the post data
+    const post = response.data; 
     
     if (post && post.imageId) {
-      const data = await getImage(post.imageId);  // Fetch the image
-      post.imageId = data;  // Attach the image to the post object
+      const data = await getImage(post.imageId);  
+      post.imageId = data;  
     }
 
     return post;
   } catch (error) {
     console.error("Error fetching post:", error);
-    throw error;  // You can throw an error or return a fallback value
+    throw error;  
   }
 }
 

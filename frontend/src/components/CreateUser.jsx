@@ -23,9 +23,7 @@ const CreateUser = () => {
     <div>
       <form action="" onSubmit={submitHandle} className="">
         <div>
-        <div>
-          <img src={loginImage} alt="" />
-        </div>
+       
         <div className="flex flex-col space-y-4 ">
           <label htmlFor="">name</label>
           <Input
