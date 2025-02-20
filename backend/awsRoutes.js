@@ -21,8 +21,8 @@ const s3bucket = "thembastorage";
 const s3Client = new S3Client({
   region: "us-east-2",
   credentials: {
-    accessKeyId: "AKIAQXPZDEZJ55US2QFV",
-    secretAccessKey: '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'
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY
     ,
   },
 });
