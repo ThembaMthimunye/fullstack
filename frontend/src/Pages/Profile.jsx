@@ -1,60 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { BlogCard } from "../components/blogCard";
-import { getPosts } from "../api";
-import { jwtDecode } from "jwt-decode"; // ✅ Correct Import
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode"; 
+import { getPosts } from "@/api";
 
-const Profile = () => {
+const YourComponent = () => {
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function loadData() {
       const token = sessionStorage.getItem("user");
-      if (!token) return;
-
+  
+      if (!token) {
+        console.error("No token found in sessionStorage");
+        return;
+      }
+  
       try {
         const decodedUser = jwtDecode(token);
-        // const allPosts = await getPosts();
+        console.log("Decoded User:", decodedUser); 
+  
+        if (!decodedUser.user || !decodedUser.user._id) {
+          console.error("User ID not found in decoded token");
+          return;
+        }
+  
         const allPosts = await getPosts();
-        console.log("All Posts:", allPosts);
-        const filteredPost = allPosts.filter(
-          (post) => post.author == decodedUser._id
-        );
-
-        setPosts(filteredPost);
-        setUser(decodedUser);
-        console.log(posts);
+        console.log("All Posts:", allPosts); 
+  
+        const userId = decodedUser.user._id; 
+        const filteredPosts = allPosts.filter((post) => {
+          console.log("Checking post author:", post.author, "vs", userId); 
+          return post.author === userId;
+        });
+  
+        setUser(decodedUser.user);
+        setPosts(filteredPosts);
+  
+        console.log("Filtered Posts:", filteredPosts); 
       } catch (error) {
-        console.error("Error decoding token:", error);
+        console.error("Error decoding token or fetching posts:", error);
       }
     }
+  
     loadData();
   }, []);
-
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
-
+  
   return (
-    <div className="text-white flex  items-center pt-50 flex-col">
-      <h2>{user?.user?.name || "N/A"}</h2>
-      <h2>{user?.user?.email || "N/A"}</h2>
-      <h2>{(user?.user?.joinDate).slice(0,10) || "N/A"}</h2>
-
-      <div>
-      
-          {
-             posts.map((post) => (
-              <div key={post._id}>
-                <h1>{post.title}</h1>
-                <h2>{post.Description}</h2>
-              </div>
-            ))
-          }
-        
-      </div>
+    <div>
+      <h1>Welcome, {user ? user.name : "Guest"}</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post._id}>{post.title}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Profile;
+export default YourComponent;

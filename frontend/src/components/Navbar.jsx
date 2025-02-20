@@ -32,9 +32,7 @@ const Navbar = () => {
     //         <NavigationMenuItem>
     //           <Link
     //             to={page.path}
-    //             key={page.path}
-
-    //           >
+    //             key={page.path}>
     //             <NavigationMenuLink  className={navigationMenuTriggerStyle()}>{page.name}</NavigationMenuLink>
     //           </Link>
     //         </NavigationMenuItem>
@@ -46,12 +44,12 @@ const Navbar = () => {
     <>
       <div className="flex px-10 py-6 text-sm font-bold text-gray-300 bg-[#0a0a0a]">
         <div className="flex justify-normal gap-20 items-center ">
-          <a href="" className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full px-3.5 py-2">T</a>
-          <a href="">HOME</a>
-          <a href="">CONTACT</a>
-          <a href="">PROFILE</a>
-          <a href="">CREATE </a>
-          <a href="">ABOUT</a>
+          <Link href="" className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full px-3.5 py-2">T</Link>
+          <Link to={'/Home'} href="">HOME</Link>
+          <Link to={"/Contact"} href="">CONTACT</Link>
+          <Link  to={"/Profile"}>PROFILE</Link>
+          <Link to={"/CreateBlog"} href="">CREATE </Link>
+          <Link to={"/About"} href="">ABOUT</Link>
         </div>
         <div className="flex gap-20 mx-[50rem] items-center">
         <CiTwitter  className="size-7"/>
