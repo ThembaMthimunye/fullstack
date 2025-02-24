@@ -116,3 +116,5 @@ export async function getImage(id) {
   const response = await axios.get(`${URL}/images/${id}`);
   return response;
 }
+
+
