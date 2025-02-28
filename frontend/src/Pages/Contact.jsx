@@ -34,12 +34,12 @@ const Contact = () => {
     }
   };
   return (
-    <div className='w-screen bg-violet-100 h-full flex justify-center items-center py-[15rem]'>
+    <div className='w-screen h-full flex justify-center items-center py-[15rem] text-gray-500'>
       <div className='flex '>
         <div className='space-y-4'>
           <h1 className='text-5xl font-semibold'>Contact Us</h1>
-          <p className='max-w-[20rem]'>Email ,call or complete the form to learn how THEe BLOG team can assit your problems</p>
-          <p>infor@Theeblog.com</p>
+          <p className='max-w-[20rem]'>Email ,call or complete the form to learn how dev BLOG team can assit your problems</p>
+          <p>infor@devblog.com</p>
           <p>078-649-0983</p>
           <p className='underline font-semibold '>Customer Support</p>
           <div className='flex space-x-10 pt-20'>
@@ -49,18 +49,18 @@ const Contact = () => {
             </div>
             <div className='space-y-2'>
               <p className='font-bold'>Feedback and Suggestions </p>
-              <p className='max-w-[15rem]'>We value your feedback and are continously working tom improve THEe BLOG.Your input is crucial in shaping the future of THEe BLOG</p>
+              <p className='max-w-[15rem]'>We value your feedback and are continously working tom improve dev BLOG.Your input is crucial in shaping the future of dev BLOG</p>
             </div>
             <div className='space-y-2' >
               <p className='font-bold'>Media Inquiries</p>
-              <p className='max-w-[15rem]'>For media-related questions or press inquiriews .please contact us at media@theeblo.com </p>
+              <p className='max-w-[15rem]'>For media-related questions or press inquiriews .please contact us at media@devblog.com </p>
             </div>
           </div>
         </div>
         <div>
-        <form  className="space-y-6 w-[30rem] bg-white px-6 py-6 rounded-md">
+        <form  className="space-y-6 w-[30rem] bg-white px-6 py-6 rounded-md  bg-violet-100">
           <div>
-            <label className="block text-gray-400">Your Name</label>
+            {/* <label className="block text-gray-400">Your Name</label> */}
             <input
               type="text"
               placeholder="Enter your name"
@@ -73,7 +73,7 @@ const Contact = () => {
 
         
           <div>
-            <label className="block text-gray-400">Your Email</label>
+            {/* <label className="block text-gray-400">Your Email</label> */}
             <input
               type="email"
               placeholder="Enter your email"
@@ -86,7 +86,7 @@ const Contact = () => {
 
         
           <div>
-            <label className="block text-gray-400">Your Message</label>
+            {/* <label className="block text-gray-400">Your Message</label> */}
             <textarea
               placeholder="Write your message here..."
               className="w-full p-3 rounded-lg  text-gray-200 border border-gray-600 focus:ring focus:ring-gray-500 h-32"
@@ -99,7 +99,7 @@ const Contact = () => {
          
           <button
             type="submit"
-            className="w-full p-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition"
+            className="w-full p-3 bg-gray-700 hover:bg-gray-500 text-white font-bold rounded-lg transition"
           >
             Send Message
           </button>

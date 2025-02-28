@@ -27,32 +27,12 @@ const Navbar = () => {
     navigate("/");
   }
   return (
-    // <NavigationMenu className="fixed  w-screen top-0 left-0 h-20 p-2">
-    //   <NavigationMenuList>
-    //     {pageData.map((page) => {
-    //       return (
-    //         <NavigationMenuItem>
-    //           <Link
-    //             to={page.path}
-    //             key={page.path}>
-    //             <NavigationMenuLink  className={navigationMenuTriggerStyle()}>{page.name}</NavigationMenuLink>
-    //           </Link>
-    //         </NavigationMenuItem>
-    //       );
-    //     })}
-    //   </NavigationMenuList>
-    //   <button onClick={logout}>Log Out </button>
-    // </NavigationMenu>
     <>
       <div className="flex px-10 py-6 text-sm font-bold text-gray-700 bg-white shadow-lg">
         <div className="flex justify-normal gap-20 items-center ">
-          {/* <Link href="" className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full px-3.5 py-2">T</Link>
-          <Link to={'/Home'} href="">HOME</Link>
-          <Link to={"/Contact"} href="">CONTACT</Link>
-          <Link  to={"/Profile"}>PROFILE</Link>
-          <Link to={"/CreateBlog"} href="">CREATE </Link>
-          <Link to={"/About"} href="">ABOUT</Link> */}
-            <SiDailydotdev className="text-4xl text-gray-500"/>
+          <Link to={"/Home"}>
+            <SiDailydotdev className="text-4xl text-gray-500" />
+          </Link>
           <div className="flex items-center bg-gray-200 rounded-full w-[30rem] px-4">
             <CiSearch className="text-gray-500 mr-2" />
             <input
@@ -62,15 +42,21 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex gap-10 mx-[50rem] items-center">
-          {/* <CiTwitter className="size-7" />
-          <CiInstagram className="size-7" />
-          <FaDribbble className="size-7" /> */}
-          <div className="flex justify-center items-center gap-2">
-          <TfiWrite className="size-6"/>
-            <p>write</p>
-          </div>
-          <MdContactSupport className="size-8"/>
-          <Link href="" className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full px-3.5 py-2">T</Link>
+          <Link to={"/CreateBlog"}>
+            <div className="flex justify-center items-center gap-2">
+              <TfiWrite className="size-6" />
+              <p>write</p>
+            </div>
+          </Link>
+          <Link to={"/Contact"}>
+            <MdContactSupport className="size-8" />
+          </Link>
+          <Link
+            to={'/Profile'}
+            className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full px-3.5 py-2"
+          >
+            T
+          </Link>
         </div>
       </div>
     </>

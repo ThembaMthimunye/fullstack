@@ -26,14 +26,14 @@ const UpdatePage = () => {
     }
   return (
     <form onSubmit={submitHandle}>
-          <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+          <div className="w-screen min-h-screen items-center flex  justify-center p-4">
       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl">
         <h2 className="text-2xl font-bold mb-6 text-center">Update Profile</h2>
         
         <div className="flex items-center gap-6">
           <div className="flex flex-col items-center">
             <img src={icon} className="w-40 h-40 rounded-full shadow-md" alt="Profile" />
-            <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Upload</button>
+            <button className="mt-4 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition">Upload</button>
           </div>
           
           <div className="flex flex-col space-y-4 flex-1">
@@ -60,7 +60,7 @@ const UpdatePage = () => {
         
         <button 
             type="submit"
-          className="mt-10 w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+          className="mt-10 w-full bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-500 transition">
           Update
         </button>
       </div>

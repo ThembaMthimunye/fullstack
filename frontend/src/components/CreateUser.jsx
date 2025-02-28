@@ -3,8 +3,14 @@ import { createuser } from "../api";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import loginImage from "../assets/Pictures/loginImage.jpg";
+import { useNavigate } from "react-router-dom";
 
 const CreateUser = () => {
+  const navigate=useNavigate()
+
+  function goto(){
+    navigate('/')
+  }
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -14,17 +20,18 @@ const CreateUser = () => {
   async function submitHandle(e) {
     e.preventDefault();
     let response = await createuser(user);
-    if (response.status !== 200) {
-      alert("User could not be created");
-    } else {
+    if (response) {
       alert("User successfully created");
+     navigate('/Home')
+    } else {
+      alert("User could not be created");
     }
     console.log(response);
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
+    <div className=" flex items-center justify-center  p-4">
+      <div className="bg-white  rounded-2xl p-6 w-full max-w-md w-[100rem]">
         <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
         <form onSubmit={submitHandle} className="space-y-6">
           <div className="flex flex-col space-y-4">
@@ -60,14 +67,19 @@ const CreateUser = () => {
               maxLength={15}
               className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-
+            
             <Button 
               type="submit" 
-              className="bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+              className="bg-black text-white py-3 rounded-lg font-semibold  transition">
               Create Account
             </Button>
           </div>
+          <div>
+            
+          </div>
+          
         </form>
+
       </div>
     </div>
   );

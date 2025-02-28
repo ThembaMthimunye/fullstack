@@ -77,7 +77,6 @@ export async function deletePost(id) {
 }
 
 export async function createPost(post) {
-
   const data=await createImage(post.file)
   const imageId=post.file.name
   post.imageId=imageId
@@ -118,3 +117,38 @@ export async function getImage(id) {
 }
 
 
+export async function reaction(id, userId) {
+  try {
+      const response = await axios.post(
+          `http://localhost:8000/api/posts/${id}/like`,
+          { userId },
+          { headers: { "Content-Type": "application/json" } }
+      );
+      return response.data;
+  } catch (error) {
+      console.error("Error in reaction:", error);
+      throw error;
+  }
+}
+
+
+
+
+export async function addComment(postId, userId, comment, token) {
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/posts/${postId}/comment`,
+      { userId, comment }, // Send userId and comment in body
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // Token still required for verifyToken
+        },
+      }
+    );
+    return response.data; // { commentCount: number, comment: { userId, text, dateCreated } }
+  } catch (error) {
+    console.error("Error adding comment:", error.response?.data || error.message);
+    throw error.response?.data || error;
+  }
+}

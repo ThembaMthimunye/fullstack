@@ -24,7 +24,9 @@ const Login = () => {
   }
   return (
     <div >
-      <form action="" onSubmit={submitHandle}>
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+
+      <form action="" onSubmit={submitHandle} className="">
        
         <div div className='flex flex-col space-y-4 '>
         <label htmlFor="">email</label>

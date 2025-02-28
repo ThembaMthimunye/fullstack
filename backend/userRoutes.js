@@ -201,6 +201,8 @@ userRoutes.route("/post/:id/react").put(async (req, res) => {
   }
 });
 
+// /api/posts/${id}/like
+
 
 
 module.exports = userRoutes;

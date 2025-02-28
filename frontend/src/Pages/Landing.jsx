@@ -9,12 +9,12 @@ const Landing = () => {
       {!view ? (
         <div className="flex flex-col w-96">
           <Login />
-          <Button className="mt-4"  onClick={()=>setView(!view)}>Create account</Button>
+          <button className="mt-4 text-blue-600"  onClick={()=>setView(!view)}> Dont have an account ? Create account</button>
         </div>
       ) : (
-        <div className="flex flex-col w-96">
+        <div className="flex flex-col w-[100rem]">
           < CreateUser/>
-          <Button className="mt-4" onClick={()=>setView(!view)}> Go to Login</Button>
+          <button className="-mt-10 text-blue-600"  onClick={()=>setView(!view)}>Have an account ? Go to Login</button>
         </div>
       )}
     </div >

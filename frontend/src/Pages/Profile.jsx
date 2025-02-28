@@ -66,18 +66,18 @@ const YourComponent = () => {
     loadData();
   }, []);
   function link() {
-    navigate(`/update/${posts[0].author}`);
+    navigate(`/update/${user._id}`);
   }
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b  text-white flex flex-col items-center py-10">
       {/* Profile Section */}
-      <div className="w-screen flex flex-col justify-center items-center mb-10">
+      <div className="w-[70rem] flex flex-col justify-center items-center mb-10">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col justify-center items-center bg-white/10 backdrop-blur-lg p-6 rounded-xl shadow-lg"
+          className="flex flex-col w-[30rem] justify-center items-center bg-white/10 backdrop-blur-lg p-6  shadow-lg"
         >
           <img
             className="w-32 h-32 rounded-full border-4 border-gray-500 shadow-lg"
@@ -97,7 +97,7 @@ const YourComponent = () => {
 
       {/* Posts Section */}
       <div className="w-full max-w-6xl px-6">
-        <h1 className="text-4xl font-extrabold text-center tracking-tight mb-10 text-gray-100">
+        <h1 className="text-4xl font-bold text-left tracking-tight mb-10 text-gray-100 underline">
           My Posts
         </h1>
 
