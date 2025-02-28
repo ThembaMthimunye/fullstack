@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+
 const Layout = () => {
   let user=sessionStorage.getItem('user')
   const navigate=useNavigate()
@@ -18,7 +19,11 @@ const Layout = () => {
   return (
     <div>
       <Navbar />
+
+      <main className="flex justify-center w-screen mt-30">
       <Outlet/>
+      </main>
+      
     </div>
   );
 };
