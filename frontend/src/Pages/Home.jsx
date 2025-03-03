@@ -7,6 +7,8 @@ const Home = () => {
   const [post, setPost] = useState([]);
   const [users, setUsers] = useState([]);
   const [images, setImages] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
 
   useEffect(() => {
     async function getAllData() {
@@ -46,6 +48,15 @@ const Home = () => {
       console.log("Please log in to like the post");
     }
   };
+  const filteredPosts = selectedCategory === "All" 
+  ? post 
+  : post.filter((item) => item.category === selectedCategory);
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+  console.log(post);
+
 
   return (
     <div className="w-screen h-screen text-center text-black">
@@ -59,7 +70,7 @@ const Home = () => {
           <>
             <div className="flex-1 px-4">
               <div className="grid grid-cols-1 gap-6">
-                {post.map((item) => {
+                {filteredPosts.map((item) => {
                   const numberOfLikes = item.likes?.length || 0;
                   return (
                     <Link key={item._id} to={`/ReadBlog/${item._id}`}>
@@ -71,14 +82,19 @@ const Home = () => {
                             <div className="flex gap-4 text-[14px] text-gray-400">
                               <p>{getAuthorName(item.author)} @</p>
                               <p>
-                                {new Date(item.dateCreated).toLocaleDateString("en-GB", {
-                                  day: "2-digit",
-                                  month: "short",
-                                  year: "numeric",
-                                })}
+                                {new Date(item.dateCreated).toLocaleDateString(
+                                  "en-GB",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  }
+                                )}
                               </p>
                             </div>
-                            <h1 className="text-xl font-semibold">{item.title}</h1>
+                            <h1 className="text-xl font-semibold">
+                              {item.title}
+                            </h1>
                             <p className="font-serif text-xl">
                               {item.content.slice(0, 49)}...
                             </p>
@@ -117,6 +133,21 @@ const Home = () => {
 
             {/* Trending Section */}
             <div className="w-1/3 h-full p-4">
+            <div className="flex space-x-2">
+  {["All", "Tech", "Food", "Sports", "Education", "Movies", "Cars", "test"].map((category) => (
+    <button
+      key={category}
+      className={`bg-gray-200 max-w-16 rounded-full flex justify-center items-center px-2 ${
+        selectedCategory === category ? "bg-blue-500 text-white" : ""
+      }`}
+      onClick={() => handleCategoryClick(category)}
+    >
+      {category}
+    </button>
+  ))}
+</div>
+
+
               <p className="flex font-semibold items-center text-3xl mb-4">
                 Trending <IoTrendingUpOutline className="ml-2" />
               </p>
@@ -124,14 +155,20 @@ const Home = () => {
                 {post.slice(0, 3).map((item, index) => (
                   <Link key={item._id} to={`/ReadBlog/${item._id}`}>
                     <div className="flex justify-start items-start gap-4">
-                      <p className="text-8xl text-gray-300 font-bold">{`0${index + 1}`}</p>
+                      <p className="text-8xl text-gray-300 font-bold">{`0${
+                        index + 1
+                      }`}</p>
                       <div className="space-y-2">
                         <div className="flex gap-4 text-[14px] text-gray-400">
                           <p>{getAuthorName(item.author)} @</p>
-                          <p>{new Date(item.dateCreated).toLocaleDateString()}</p>
+                          <p>
+                            {new Date(item.dateCreated).toLocaleDateString()}
+                          </p>
                         </div>
                         <h1 className="text-lg font-semibold">{item.title}</h1>
-                        <p className="font-serif">{item.content.slice(0, 49)}...</p>
+                        <p className="font-serif">
+                          {item.content.slice(0, 49)}...
+                        </p>
                       </div>
                     </div>
                   </Link>

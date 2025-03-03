@@ -57,6 +57,14 @@ const Navbar = () => {
           >
             T
           </Link>
+
+          <Link
+            to={'/'}
+            onClick={logout}
+            className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full px-3.5 py-2"
+          >
+            Logout
+          </Link>
         </div>
       </div>
     </>

@@ -44,7 +44,8 @@ postRoutes.route('/posts').post(verifyToken, async(req,res)=>{
         author:req.body.author,
         dateCreated:req.body.dateCreated,
         imageId:req.body.imageId,
-        like:0
+        like:0,
+        category:req.body.category
     }
 
     let data =await db.collection("posts").insertOne(mongoObject)

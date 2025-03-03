@@ -14,6 +14,7 @@ const CreateBlog = () => {
   const [file, setFile] = useState(null);
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [category,setCategory]=useState()
 
   const inputFile = useRef(null);
   const MAX_FILE_SIZE = 1500000000;
@@ -57,7 +58,8 @@ const CreateBlog = () => {
       dateCreated: new Date(),
       file,
       likes:0,
-      comments:[]
+      comments:[],
+      category,
     };
 
     await createPost(data);
@@ -155,6 +157,19 @@ const CreateBlog = () => {
               type="text"
               maxLength={200}
             />
+
+            <label className="block text-lg font-medium mb-2 text-gray-600">
+              Category
+            </label>
+            <Input
+              className="w-full px-4 py-3 rounded-lg border text-black focus:ring-2 focus:ring-blue-400"
+              required
+              onChange={(e) => setCategory(e.target.value)}
+              type="text"
+              maxLength={200}
+            />
+            
+
           </div>
   
           <div>
