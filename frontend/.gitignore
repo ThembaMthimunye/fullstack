@@ -19,6 +19,7 @@ dist-ssr
 .env.*.local
 config.env  # 🚨 Ensure this is ignored if it contains secrets
 ../backend/awsRoutes.js
+*.js
 
 # Editor directories and files
 .vscode/*
