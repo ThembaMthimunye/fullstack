@@ -3,8 +3,7 @@ const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId;
 const bcrypt = require("bcrypt");
 const jwt=require('jsonwebtoken')
-require("dotenv").config({ path: "./config.env" });
-
+require("dotenv").config();
 
 let userRoutes = express.Router();
 
@@ -82,29 +81,68 @@ userRoutes.route("/user").post(async (req, res) => {
 
 ///Update One
 
+// userRoutes.route("/user/:id").put(async (req, res) => {
+//   let db = database.getDb();
+//   let mongoObject = {
+//     $set: {
+//       name: req.body.name,
+//       email: req.body.email,
+//       password: req.body.password,
+     
+//     },
+//   };
+//   let data = await db
+//     .collection("users")
+//     .updateOne({ _id: new ObjectId(req.params.id) }, mongoObject);
+//   res.json(data);
+// });
+
+// const { ObjectId } = require('mongodb');
+
 userRoutes.route("/user/:id").put(async (req, res) => {
   let db = database.getDb();
+  
+  
+  if (!ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ error: "Invalid ID format" });
+  }
+  if (req.body.password) {
+    hashedPassword = await bcrypt.hash(req.body.password, 10);
+    console.log("password hashed")
+  } else {
+    hashedPassword = undefined;
+  }
+
   let mongoObject = {
     $set: {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
-      joinDate: req.body.joinDate,
-      posts: req.body.posts,
+      password: hashedPassword,
     },
   };
-  let data = await db
-    .collection("users")
-    .updateOne({ _id: new ObjectId(req.params.id) }, mongoObject);
-  res.json(data);
+
+  try {
+    let data = await db
+      .collection("users")
+      .updateOne({ _id: new ObjectId(req.params.id) }, mongoObject);
+
+    if (data.modifiedCount === 0) {
+      return res.status(404).json({ error: "User not found or no changes made" });
+    }
+
+    res.json({ message: "User updated successfully", data });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
 });
+
 
 //Delete One
 
 userRoutes.route("/user/:id").delete(async (req, res) => {
   let db = database.getDb();
   let data = await db
-    .collection("users")
+    .collection("posts")
     .deleteOne({ _id: new ObjectId(req.params.id) });
   res.json(data);
 });
@@ -128,5 +166,42 @@ userRoutes.route('/user/login').post(async(req,res)=>{
         res.json({success:false,message:'User not found'})
     }
 })
+
+
+userRoutes.route("/post/:id/comment").post(async (req, res) => {
+  let db = database.getDb();
+  const { user, text } = req.body;
+
+  try {
+    const result = await db.collection("posts").updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $push: { comments: { user, text, timestamp: new Date() } } }
+    );
+
+    res.json({ message: "Comment added!", result });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+});
+
+userRoutes.route("/post/:id/react").put(async (req, res) => {
+  let db = database.getDb();
+  const { emoji } = req.body;
+
+  try {
+    const result = await db.collection("posts").updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $inc: { [`reactions.${emoji}`]: 1 } }
+    );
+
+    res.json({ message: "Reaction added!", result });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+});
+
+// /api/posts/${id}/like
+
+
 
 module.exports = userRoutes;

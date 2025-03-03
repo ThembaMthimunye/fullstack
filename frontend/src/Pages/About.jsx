@@ -1,41 +1,116 @@
-import React from 'react'
-
+import React from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import aboutImage from "../assets/Pictures/loginImage.jpg";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const About = () => {
+  const navigate = useNavigate();
+
+  const joinUs = () => {
+    navigate("/");
+  };
+
   return (
-    <div>
-       <section id="about-us">
-    <h1>About Us</h1>
-    
-    <p>Welcome to <strong>Your Blog Name</strong>!</p>
+    <div className="w-screen min-h-screen flex flex-col items-center bg-gray-50 text-gray-800 p-6">
+      {/* Hero Section */}
+      <div className="relative w-full h-[400px] max-w-5xl">
+        <img
+          src={aboutImage}
+          alt="About Us"
+          className="w-full h-full object-cover rounded-lg shadow-lg"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center text-white p-5">
+          <motion.h1
+            className="text-5xl font-extrabold tracking-wide text-center"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            About Us
+          </motion.h1>
+          <motion.p
+            className="text-lg mt-3 max-w-2xl text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            Discover the passion and stories behind <strong>THEe BLOG</strong>.
+          </motion.p>
+        </div>
+      </div>
 
-    <p>At <strong>Your Blog Name</strong>, we're passionate about bringing you engaging, informative, and thought-provoking content on a wide variety of topics. Whether you're here to discover the latest trends, get expert advice, or just enjoy some light reading, we’ve got something for everyone.</p>
+      {/* Content Section */}
+      <div className="max-w-4xl mt-12 text-lg leading-relaxed space-y-8">
+        <motion.p
+          className="text-center text-xl text-gray-600 mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2 }}
+        >
+          Welcome to <strong>THEe BLOG</strong>, where we bring you engaging, informative, and inspiring content on a variety of topics.
+        </motion.p>
 
-    <h2>Our Mission</h2>
-    <p>Our mission is simple: to inspire and inform. We believe in the power of storytelling and sharing knowledge that can positively impact your day, your mindset, and your life. We strive to create a space where curiosity is encouraged, creativity is celebrated, and meaningful conversations can happen.</p>
+        {[
+          {
+            title: "Our Mission",
+            color: "text-blue-600",
+            content:
+              "Our mission is simple: to inspire and inform. We believe in the power of storytelling and sharing knowledge that can positively impact lives.",
+          },
+          {
+            title: "Who We Are",
+            color: "text-green-600",
+            content:
+              "We are a team of writers, creatives, and curious minds, all passionate about sharing stories and ideas. Our contributors bring diverse perspectives, ensuring fresh and exciting content.",
+          },
+          {
+            title: "Why Follow Us?",
+            color: "text-purple-600",
+            content: (
+              <ul className="list-disc list-inside space-y-2">
+                <li>
+                  <strong>Fresh Perspectives</strong>: Insightful articles, opinion pieces, and expert interviews.
+                </li>
+                <li>
+                  <strong>In-Depth Guides</strong>: How-to articles and detailed guides on various topics.
+                </li>
+                <li>
+                  <strong>Community Engagement</strong>: We love hearing from you! Join the discussion in our comments.
+                </li>
+              </ul>
+            ),
+          },
+        ].map((section, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.02 }}
+            className="bg-white p-6 rounded-lg shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2, duration: 0.8 }}
+          >
+            <h2 className={`text-3xl font-semibold mb-4 ${section.color}`}>
+              {section.title}
+            </h2>
+            <p>{section.content}</p>
+          </motion.div>
+        ))}
+      </div>
 
-    <h2>Who We Are</h2>
-    <p>We are a team of writers, creatives, and curious minds, all with one thing in common – a love for sharing stories and ideas. From lifestyle tips to deep dives into current events, we offer diverse perspectives and expert insights to keep you informed and entertained.</p>
-
-    <p>Our contributors come from various walks of life, each bringing their own unique voice to the blog. Whether we’re tackling hot topics, diving into niche interests, or offering practical advice, you’ll always find content that resonates with you.</p>
-
-    <h2>Why Follow Us?</h2>
-    <p>We believe in quality over quantity. Every post we share is crafted with care, aiming to provide you with valuable information, entertainment, and inspiration. Here’s what you can expect from us:</p>
-    
-    <ul>
-      <li><strong>Fresh Perspectives</strong>: We offer a mix of insightful articles, opinion pieces, and interviews with industry experts.</li>
-      <li><strong>In-Depth Guides</strong>: From how-to articles to comprehensive guides, we break down complex topics to make them easy to understand and apply.</li>
-      <li><strong>Community Engagement</strong>: We love hearing from our readers! Your feedback, comments, and thoughts are always welcome, and we encourage open, respectful discussions.</li>
-    </ul>
-
-    <h2>Join Us on Our Journey</h2>
-    <p>We’re excited to have you as part of our growing community. Whether you’re here for a quick read or to dive deep into our archives, we hope you find something that sparks your interest.</p>
-
-    <p>Stay connected with us through our social media channels and subscribe to our newsletter for regular updates and exclusive content.</p>
-
-    <p>Thank you for visiting <strong>Your Blog Name</strong>. We hope you enjoy your time here!</p>
-  </section>
+      {/* Call to Action */}
+      <div className="mt-12">
+        <motion.button
+          onClick={joinUs}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-blue-600 text-white px-8 py-3 rounded-full text-lg shadow-md hover:bg-blue-700 transition"
+        >
+          Join Our Community
+        </motion.button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
