@@ -3,8 +3,7 @@ const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId;
 const bcrypt = require("bcrypt");
 const jwt=require('jsonwebtoken')
-require("dotenv").config({ path: "./config.env" });
-
+require("dotenv").config();
 
 let userRoutes = express.Router();
 
