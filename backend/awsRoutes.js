@@ -22,8 +22,8 @@ const s3bucket = "thembastorage";
 const s3Client = new S3Client({
   region: "us-east-2",
   credentials: {
-    // accessKeyId: "AKIAQXPZDEZJ4QUITNO7",
-    // secretAccessKey: "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"
+     accessKeyId: "AKIAQXPZDEZJ4QUITNO7",
+     secretAccessKey: "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"
     ,
   },
 });

@@ -14,19 +14,10 @@ dist-ssr
 *.local
 
 # Environment & Secret Files
-<<<<<<< HEAD
 .env
 .env.local
 .env.*.local
 config.env  # 🚨 Ensure this is ignored if it contains secrets
-=======
-*.env
-.env.local
-.env.*.local
-config.env  # 🚨 Ensure this is ignored if it contains secrets
-../backend/awsRoutes.js
-*.js
->>>>>>> 257a2865f186ad37aac20a5b8efa7efee949fc9a
 
 # Editor directories and files
 .vscode/*
