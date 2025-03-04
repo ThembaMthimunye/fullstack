@@ -2,18 +2,22 @@ import { useState, useEffect } from "react";
 import { getPosts, getusers, getImage } from "../api";
 import { IoTrendingUpOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { CiSearch } from "react-icons/ci";
 
 const Home = () => {
   const [post, setPost] = useState([]);
   const [users, setUsers] = useState([]);
   const [images, setImages] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("All");
-
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function getAllData() {
       try {
-        const [postsData, usersData] = await Promise.all([getPosts(), getusers()]);
+        const [postsData, usersData] = await Promise.all([
+          getPosts(),
+          getusers(),
+        ]);
         if (Array.isArray(postsData)) setPost(postsData);
         else setPost([]);
         if (Array.isArray(usersData)) setUsers(usersData);
@@ -48,15 +52,19 @@ const Home = () => {
       console.log("Please log in to like the post");
     }
   };
-  const filteredPosts = selectedCategory === "All" 
-  ? post 
-  : post.filter((item) => item.category === selectedCategory);
+  const filteredPosts =
+    selectedCategory === "All"
+      ? post
+      : post.filter((item) => item.category === selectedCategory);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-  console.log(post);
 
+  const filteredPages = post.filter((page) =>
+    page.title.toLowerCase().includes(search.toLowerCase())
+  );
+  console.log(post);
 
   return (
     <div className="w-screen h-screen text-center text-black">
@@ -65,6 +73,28 @@ const Home = () => {
         <hr className="w-40 bg-black" />
       </div>
 
+      <div className="flex space-x-4 ml-20 mt-4">
+        {[
+          "All",
+          "Tech",
+          "Food",
+          "Sports",
+          "Education",
+          "Movies",
+          "Cars",
+          "test",
+        ].map((category) => (
+          <button
+            key={category}
+            className={`bg-gray-200  rounded-full flex justify-center items-center px-2 ${
+              selectedCategory === category ? "bg-blue-500 text-white" : ""
+            }`}
+            onClick={() => handleCategoryClick(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
       <div className="flex w-full h-[80%] mx-auto mt-10 text-left pb-4">
         {post.length > 0 ? (
           <>
@@ -76,7 +106,6 @@ const Home = () => {
                     <Link key={item._id} to={`/ReadBlog/${item._id}`}>
                       <div className="space-y-6 px-20 group hover:cursor-pointer">
                         <hr className="w-[60rem]" />
-                        {/* Use CSS Grid for consistent layout */}
                         <div className="grid grid-cols-[2fr_1fr] gap-8 items-start">
                           <div className="space-y-4">
                             <div className="flex gap-4 text-[14px] text-gray-400">
@@ -133,26 +162,21 @@ const Home = () => {
 
             {/* Trending Section */}
             <div className="w-1/3 h-full p-4">
-            <div className="flex space-x-2">
-  {["All", "Tech", "Food", "Sports", "Education", "Movies", "Cars", "test"].map((category) => (
-    <button
-      key={category}
-      className={`bg-gray-200 max-w-16 rounded-full flex justify-center items-center px-2 ${
-        selectedCategory === category ? "bg-blue-500 text-white" : ""
-      }`}
-      onClick={() => handleCategoryClick(category)}
-    >
-      {category}
-    </button>
-  ))}
-</div>
-
+              <div className="flex items-center bg-gray-200 rounded-full w-[30rem] px-4">
+                <CiSearch className="text-gray-500 mr-2" />
+                <input
+                  className="w-full h-8 bg-transparent outline-none"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
 
               <p className="flex font-semibold items-center text-3xl mb-4">
                 Trending <IoTrendingUpOutline className="ml-2" />
               </p>
               <div className="space-y-6">
-                {post.slice(0, 3).map((item, index) => (
+                {filteredPages.slice(0, 9).map((item, index) => (
                   <Link key={item._id} to={`/ReadBlog/${item._id}`}>
                     <div className="flex justify-start items-start gap-4">
                       <p className="text-8xl text-gray-300 font-bold">{`0${

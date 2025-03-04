@@ -14,22 +14,23 @@ const YourComponent = () => {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  
 
   async function handleDelete(postId) {
     if (window.confirm("Are you sure you want to delete this post?")) {
       const result = await deletePost(postId);
-  
+
       if (result) {
         alert("Post deleted successfully");
-  
-        setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+
+        setPosts((prevPosts) =>
+          prevPosts.filter((post) => post._id !== postId)
+        );
       } else {
         alert("Failed to delete post");
       }
     }
   }
-  
+
   useEffect(() => {
     async function loadData() {
       const token = sessionStorage.getItem("user");
@@ -71,7 +72,6 @@ const YourComponent = () => {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b  text-white flex flex-col items-center py-10">
-      {/* Profile Section */}
       <div className="w-[70rem] flex flex-col justify-center items-center mb-10">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -95,7 +95,6 @@ const YourComponent = () => {
         </motion.div>
       </div>
 
-      {/* Posts Section */}
       <div className="w-full max-w-6xl px-6">
         <h1 className="text-4xl font-bold text-left tracking-tight mb-10 text-gray-100 underline">
           My Posts
@@ -119,10 +118,9 @@ const YourComponent = () => {
                     />
                     {/* <MdDeleteForever className="text-black size-10 hidden hover:block"/> */}
                     <MdDeleteForever
-  onClick={() => handleDelete(post._id)}
-  className="text-black size-10 opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
-/>
-
+                      onClick={() => handleDelete(post._id)}
+                      className="text-black size-10 opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                    />
                   </CardHeader>
                   <CardContent className="p-5">
                     <CardTitle className="text-xl font-bold mb-2 text-gray-100">
@@ -131,7 +129,7 @@ const YourComponent = () => {
                     <p className="text-gray-300 mb-4 line-clamp-2">
                       {post.description}
                     </p>
-                    <Button className="w-full bg-blue-500 hover:bg-blue-600 transition">
+                    <Button className="w-full bg-gray-500 hover:bg-blue-600 transition">
                       Read More
                     </Button>
                   </CardContent>
